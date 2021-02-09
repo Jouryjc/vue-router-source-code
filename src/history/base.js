@@ -86,6 +86,9 @@ export class History {
     let route
     // catch redirect option https://github.com/vuejs/vue-router/issues/3201
     try {
+
+      // 调用 Vue-Router 实例的 match 方法做路径匹配
+      // 传入老路径和当前路径
       route = this.router.match(location, this.current)
     } catch (e) {
       this.errorCbs.forEach(cb => {
@@ -169,6 +172,7 @@ export class History {
       route.matched
     )
 
+    // 钩子队列
     const queue: Array<?NavigationGuard> = [].concat(
       // in-component leave guards
       extractLeaveGuards(deactivated),

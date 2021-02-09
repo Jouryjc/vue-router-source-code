@@ -39,9 +39,17 @@ export default class VueRouter {
   afterHooks: Array<?AfterNavigationHook>
 
   constructor (options: RouterOptions = {}) {
+
+    // Vue 根实例
     this.app = null
+
+    // 持有 $options.router 属性的 Vue 实例
     this.apps = []
+
+    // 保存路由配置
     this.options = options
+
+    // 钩子
     this.beforeHooks = []
     this.resolveHooks = []
     this.afterHooks = []
@@ -98,6 +106,7 @@ export default class VueRouter {
           `before creating root instance.`
       )
 
+    // this.apps 存放所有 Vue 实例
     this.apps.push(app)
 
     // set up app destroyed handler
@@ -124,6 +133,8 @@ export default class VueRouter {
     const history = this.history
 
     if (history instanceof HTML5History || history instanceof HashHistory) {
+
+      // 定义了处理滚动的逻辑
       const handleInitialScroll = routeOrError => {
         const from = history.current
         const expectScroll = this.options.scrollBehavior
@@ -133,10 +144,14 @@ export default class VueRouter {
           handleScroll(this, routeOrError, from, false)
         }
       }
+
+      // 定义事件监听逻辑
       const setupListeners = routeOrError => {
         history.setupListeners()
         handleInitialScroll(routeOrError)
       }
+
+      // 触发第一次跳转
       history.transitionTo(
         history.getCurrentLocation(),
         setupListeners,

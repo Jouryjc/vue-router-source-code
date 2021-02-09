@@ -24,11 +24,13 @@ export function install (Vue) {
   // 在两个钩子中混入各种属性
   Vue.mixin({
     beforeCreate () {
+
+      // 在 new Vue 的时候会将参数合并到 $options 中
       if (isDef(this.$options.router)) {
         this._routerRoot = this
         this._router = this.$options.router
 
-        // 调用路由器的init方法，初始化路由器
+        // 调用路由器的init方法
         this._router.init(this)
 
         // 将 _route 变成一个响应式对象

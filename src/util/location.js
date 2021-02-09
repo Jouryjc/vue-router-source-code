@@ -13,6 +13,8 @@ export function normalizeLocation (
   append: ?boolean,
   router: ?VueRouter
 ): Location {
+
+  // push时只传字符串实际上相当于传了 { path: ... }
   let next: Location = typeof raw === 'string' ? { path: raw } : raw
   // named target
   if (next._normalized) {
@@ -43,6 +45,7 @@ export function normalizeLocation (
     return next
   }
 
+  // 将path解析成 { path, query, hash } 三部分
   const parsedPath = parsePath(next.path || '')
   const basePath = (current && current.path) || '/'
   const path = parsedPath.path
